@@ -1,9 +1,14 @@
 #define MAX_LIMIT 80
+#define NUMBER_OF_STRING 1
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
 
 int count_tokens(char* str);
+char** tokenize(char* str);
+char *word_start(char* str);
+bool non_delim_character(char c);
+bool delim_character(char c);
 
 int main()
 {
@@ -12,7 +17,23 @@ int main()
    fgets(str, MAX_LIMIT, stdin);
 
    char* pointer = str;
-   printf("%d",count_tokens(pointer));
+   /* get the num of tokens in given string and call malloc */
+   int numTokens = count_tokens(pointer);
+   printf("%d\n",numTokens);
+
+   tokenize(pointer);
+
+
+   /*
+
+
+   char* new_string = (char*) malloc(numTokens * sizeof(char));
+   printf("%d\n", *new_string);
+
+   */
+
+
+
 
 }
 
@@ -49,7 +70,27 @@ bool non_delim_character(char c){
    space-separated word*/
 char *word_start(char* str){
 
+
+    /* Iterate through string until space is seen or the end is reached.
+    Do second check when we break out to make sure we are not at end 
+    returns pointer to first char of space seperated word*/
+
+
+    char *pointer = str;
+
+    if(delim_character(*pointer) == true){
+        return word_start(pointer+1);
+    }
+
+    if(non_delim_character(*pointer) == true){
+        char *p = pointer;
+        return p;
+    }
+
     return 0;
+
+     
+
 }
 
 
@@ -59,15 +100,20 @@ char *word_start(char* str){
 /* Returns a pointer to the first space character of the zero
 terminated string*/
 char *end_word(char* str){
-    char* nextChar;
-
-
-    return nextChar;
+    
+    while(*str != '\0' && *str != ' '){
+        str++;
+    }
+    return str;
 }
 
 
 // counts the number of words or tokens
 int count_tokens(char* str){
+
+    /* uses pointer to iterate through array of char and if space is seen then
+    we have reached the end of a word and have found a token. Will iterate until end
+    and return all tokens     */
     
     char * t;
     int size = 0;
@@ -79,7 +125,9 @@ int count_tokens(char* str){
         }
 
     }
-    size ++;
+
+    size++;
+
 
     return size;
 
@@ -98,19 +146,28 @@ int count_tokens(char* str){
 
 
 char *copy_str(char *inStr, short len){
-    return 0;
+    char* word = (char*) malloc(len * sizeof(char));
+
+    for(int i = 0; i< len; i++){
+        word[i] = *inStr;
+        inStr++;
+    }
+
+
+    return word;
 
 }
 
 
 
-/*
+
 char** tokenize(char* str){
-    char* new_string = (char*) malloc(str_size * sizeof(char));
-    printf("%s",new_string);
+    char *newPointer = word_start(str);
+    printf("%c\n",*newPointer);
+    char *newNew = end_word(str);
+    printf("%c\n",*newNew);
     return 0;
 }
-*/
 
 
 
