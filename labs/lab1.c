@@ -9,6 +9,8 @@ char** tokenize(char* str);
 char *word_start(char* str);
 bool non_delim_character(char c);
 bool delim_character(char c);
+void print_all_tokens(char** tokens,int len);
+
 
 int main()
 {
@@ -17,20 +19,15 @@ int main()
    fgets(str, MAX_LIMIT, stdin);
 
    char* pointer = str;
-   /* get the num of tokens in given string and call malloc */
+
    int numTokens = count_tokens(pointer);
-   printf("%d\n",numTokens);
-
-   tokenize(pointer);
-
-
-   /*
-
 
    char* new_string = (char*) malloc(numTokens * sizeof(char));
-   printf("%d\n", *new_string);
+   char ** tokens = tokenize(new_string);
+   int len = count_tokens(new_string);
+   print_all_tokens(tokens,len);
 
-   */
+
 
 
 
@@ -71,9 +68,9 @@ bool non_delim_character(char c){
 char *word_start(char* str){
 
 
-    /* Iterate through string until space is seen or the end is reached.
-    Do second check when we break out to make sure we are not at end 
-    returns pointer to first char of space seperated word*/
+    /*iterate through string and call delim_character method and non_delim method
+    in order to check what type of char is in the index we are at. If current pos is a space
+    call word_start method and move pointer. Method will be called until a non_delim char is seen*/
 
 
     char *pointer = str;
@@ -151,6 +148,7 @@ char *copy_str(char *inStr, short len){
     for(int i = 0; i< len; i++){
         word[i] = *inStr;
         inStr++;
+
     }
 
 
@@ -162,17 +160,34 @@ char *copy_str(char *inStr, short len){
 
 
 char** tokenize(char* str){
-    char *newPointer = word_start(str);
-    printf("%c\n",*newPointer);
-    char *newNew = end_word(str);
-    printf("%c\n",*newNew);
-    return 0;
+
+    int len = count_tokens(str);
+
+    char** tokens = (char**) malloc(len * sizeof(char*));
+
+    char* start = str;
+
+    char* end = end_word(str);
+
+    for(int i = 0; i < len; i++){
+        tokens[i] = copy_str(start,end-start);
+        start = word_start(end);
+        end = end_word(start);
+    }
+
+    return tokens;
+    
 }
 
 
 
 
 
-void print_all_tokens(char** tokens){
+
+void print_all_tokens(char** tokens,int len){
+
+    for(int i = 0; i < len; i++){
+        printf("Token[%d]= %s\n", i, tokens[i]);
+    }
 
 }
