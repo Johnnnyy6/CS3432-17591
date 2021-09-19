@@ -16,16 +16,15 @@ int main()
 {
    char str[MAX_LIMIT];
    printf("Enter a sentence to be tokenized:\n");
-   fgets(str, MAX_LIMIT, stdin);
-
-   char* pointer = str;
-
-   int numTokens = count_tokens(pointer);
-
-   char* new_string = (char*) malloc(numTokens * sizeof(char));
+   
+   char* new_string = (char*) malloc(MAX_LIMIT * sizeof(char));
+   scanf("%99[^\n]", new_string);
+   
    char ** tokens = tokenize(new_string);
    int len = count_tokens(new_string);
    print_all_tokens(tokens,len);
+
+   return 0;
 
 
 
