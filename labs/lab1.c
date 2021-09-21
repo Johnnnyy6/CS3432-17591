@@ -1,5 +1,4 @@
-#define MAX_LIMIT 80
-#define NUMBER_OF_STRING 1
+#define MAX_LIMIT 1000
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -18,7 +17,7 @@ int main()
    printf("Enter a sentence to be tokenized:\n");
    
    char* new_string = (char*) malloc(MAX_LIMIT * sizeof(char));
-   scanf("%99[^\n]", new_string);
+   scanf("%999[^\n]", new_string);
    
    char ** tokens = tokenize(new_string);
    int len = count_tokens(new_string);
@@ -97,10 +96,17 @@ char *word_start(char* str){
 terminated string*/
 char *end_word(char* str){
     
-    while(*str != '\0' && *str != ' '){
-        str++;
+    /*base case, in case pointer is at the end of array*/
+    if (*str == '\0'){
+        return str;
     }
-    return str;
+    /*Call recursively until i get the end of the word*/
+    char *pointer = str; 
+    if (delim_character(*pointer) == true){
+        char *p = pointer;
+        return p;
+    }
+    return end_word(pointer +1);
 }
 
 
@@ -114,7 +120,7 @@ int count_tokens(char* str){
     char * t;
     int size = 0;
     
-    for (t = str; *t != '\0'; t++){
+    for (t = word_start(str); *t != '\0'; t++){
 
         if(delim_character(*t) == true){
             size++;
@@ -164,9 +170,9 @@ char** tokenize(char* str){
 
     char** tokens = (char**) malloc(len * sizeof(char*));
 
-    char* start = str;
+    char* start = word_start(str);
 
-    char* end = end_word(str);
+    char* end = end_word(start);
 
     for(int i = 0; i < len; i++){
         tokens[i] = copy_str(start,end-start);
@@ -185,8 +191,10 @@ char** tokenize(char* str){
 
 void print_all_tokens(char** tokens,int len){
 
-    for(int i = 0; i < len; i++){
-        printf("Token[%d]= %s\n", i, tokens[i]);
+    int i = 0;
+    for (char **p = tokens; *p; p++){
+        printf("Token[%d] = %s\n",i,*p);
+        i++;
     }
 
 }
