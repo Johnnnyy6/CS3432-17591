@@ -100,7 +100,7 @@ char *end_word(char* str){
     if (*str == '\0'){
         return str;
     }
-    /*Call recursively until i get the end of the word*/
+    /*Call recursively until we get the end of the word*/
     char *pointer = str; 
     if (delim_character(*pointer) == true){
         char *p = pointer;
@@ -115,7 +115,7 @@ int count_tokens(char* str){
 
     /* uses pointer to iterate through array of char and if space is seen then
     we have reached the end of a word and have found a token. Will iterate until end
-    and return all tokens     */
+    and return all tokens */
     
     char * t;
     int size = 0;
@@ -146,7 +146,7 @@ int count_tokens(char* str){
      tokens[3] = 0
 */
 
-
+/* we start by creating a pointer of and filling it with all the characters of the given word. Once we fill it we return the word  */
 char *copy_str(char *inStr, short len){
     char* word = (char*) malloc(len * sizeof(char));
 
@@ -163,7 +163,10 @@ char *copy_str(char *inStr, short len){
 
 
 
-
+/* we start by getting the number/len of tokens. We then create 3 different things, a pointer of pointers, a pointer to hold 
+the start word and the end word. Once we create these we can then iterate with a loop and subtract the addresses of the start
+and end pointer in order to obtain our word. We then copy that into our tokens pointer pointer. Once we iterate through all we 
+return our double pointer. */
 char** tokenize(char* str){
 
     int len = count_tokens(str);
@@ -188,7 +191,7 @@ char** tokenize(char* str){
 
 
 
-
+//iterate and print all tokens
 void print_all_tokens(char** tokens,int len){
 
     int i = 0;
