@@ -59,7 +59,33 @@ bool interpret(char* instr){
 		int value3 = atoi(instructions[3]);
 		
 		reg[value] = reg[value2] + reg[value3];
+		printf("%d %d %d",reg[value2],reg[value3],reg[value]);
 		return true;
+	}
+	else if (equal(instructions[0], lw)){
+		char* mem_file = "mem.txt";
+		int32_t address = (atoi(instructions[2]) + reg[atoi(rem2(instructions[3]))])*4;
+		int value = atoi(rem(instructions[1]));
+		int32_t read = read_address(address, mem_file);
+		reg[value] = read;
+		printf("Read address %lu (0x%lX): %lu (0x%lX)\n", address, address, read, read); // %lu -> format as an long-unsigned
+		return true;
+
+	}
+
+	else if (equal(instructions[0], sw)){
+		char* mem_file = "mem.txt";
+		int32_t data_to_write = atoi(rem(instructions[1]));
+		int32_t address = (atoi(instructions[2]) + reg[atoi(rem2(instructions[3]))])*4;
+
+
+		int32_t write = write_address(data_to_write, address, mem_file);
+
+		if(write == (int32_t) NULL){
+			printf("ERROR: Unsucessful write to address %0X\n", 0x40);
+		return true;
+		}
+
 	}
 	
 	return false;
