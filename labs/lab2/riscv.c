@@ -44,6 +44,8 @@ void init_regs(){
  * Fill out this function and use it to read interpret user input to execute RV64 instructions.
  * You may expect that a single, properly formatted RISC-V instruction string will be passed
  * as a parameter to this function.
+ * lw value of memory into the destination register
+ * sw take register value and put into memory address
  */
 bool interpret(char* instr){
 
