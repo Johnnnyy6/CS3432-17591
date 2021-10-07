@@ -134,7 +134,7 @@ bool interpret(char* instr){
 
 /* Method takes in two pointers two compare and find the correct instruction we are tying to perform
 for example x pointer is lw and y pointer is also lw. Equal method should return true allowing method above to find correct instruction
-and perform correct instructions */
+and perform correct instructions . X is user input converterd to pointer and y is comparison to our string we compare too */
 bool equal(char* x, char* y){
 
 	int counter = 0;
